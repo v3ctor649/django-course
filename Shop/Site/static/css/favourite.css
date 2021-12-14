@@ -1,0 +1,5 @@
+form.hide-submit input[type="submit"] { display: none;}
+
+.stars:hover{
+    cursor: pointer;
+}

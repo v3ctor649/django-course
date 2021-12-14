@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% load static %}
+{% block for_css %}
+<link rel="stylesheet" href="{% static 'css/cart.css'%}" type="text/css">
+{% endblock %}
+{% block title %}Корзина{% endblock %}
+
+{% block content %}
+{% ifnotequal counter_items_in_cart 0 %}
+<section>
+    <div class="container w-75">
+        <div class="row d-flex justify-content-center">
+            <div class="col">
+                {%for item in items_in_cart%}
+                <div class="card gy-5 mb-4 mt-4">
+                    <div class="card-body p-4">
+
+                        <div class="row align-items-center">
+                            <div class="col-3 align-items-center">
+                                <div class="col-md-2">
+                                    <img src="/static/img/{{item.photo}}" class="img-fluid" style="max-width: 250%;"
+                                        alt="Generic placeholder image">
+                                </div>
+                            </div>
+                            <div class="col-9 align-items-center justify-content-center d-flex">
+                                <div class="col-md-2 d-flex justify-content-center mx-auto">
+                                    <div>
+                                        <p class="small text-muted mb-4 pb-2">Название</p>
+                                        <p class="lead fw-normal mb-0">{{item.name}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 d-flex justify-content-center mx-auto">
+                                    <div>
+                                        <p class="small text-muted mb-4 pb-2">Количество</p>
+                                        <p class="lead fw-normal mb-0">1</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 d-flex justify-content-center mx-auto">
+                                    <div>
+                                        <p class="small text-muted mb-4 pb-2">Цена</p>
+                                        <p class="lead fw-normal mb-0">{{item.price}}р</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 d-flex justify-content-center mx-auto">
+                                    <div>
+                                        <p class="lead fw-normal mb-0">
+                                            <form class = "hide-submit" method="POST" action="{% url 'del_from_cart'%}" class="justify-content-center align-items-center">
+                                                {% csrf_token %}
+                                                <label>
+                                                    <input type="submit" />
+                                                    <div class = "delete">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="red" class="bi bi-x" viewBox="0 0 16 16">
+                                                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                                                          </svg>
+                                                    </div>
+                                                  </label>
+                                                  <input type="hidden" name="item_id" value="{{ item.id }}" />
+                                            </form>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                {%endfor%}
+
+                <!-- подсчет стоимости -->
+                <div class="card mb-5">
+                    <div class="card-body p-4">
+
+                        <div class="float-end">
+                            <p class="mb-0 me-5 d-flex align-items-center">
+                                <span class="small text-muted me-2">Общая стоимость:</span> <span
+                                    class="lead fw-normal">{{full_price}}р</span>
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- кнопки -->
+                <div class="d-flex justify-content-end align-items-center">
+                    <form method="POST" action="{% url 'clear_cart'%}" class="justify-content-center align-items-center">
+                        {% csrf_token %}
+                        <input type="submit" class="btn btn-danger me-2 btn-sm" value="Очистить корзину">
+                    </form>
+                    <form method="POST"  action = "{%url 'make_order'%}"class="justify-content-center align-items-center">
+                        {% csrf_token %}
+                        <input type="submit" class="btn btn-primary me-2 btn-lg" value="Сделать заказ">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{%else%}
+<h1 class="justify-content-center">Корзина пуста</h1>
+{%endifnotequal%}
+{%endblock%}

@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load static %}
+{% block for_css %}
+<link rel="stylesheet" href="{% static 'css/orders.css'%}" type="text/css">
+{% endblock %}
+{% block title %}Заказы{% endblock %}
+{% block content %}
+{% ifnotequal counter_items_in_orders 0 %}
+{%for order,items_in_order in orders.items %}
+<section class = "mb-5">
+    <div class="container w-75 border border-dark">
+        <div class="row d-flex justify-content-center one_order">
+            <div class="d-flex bd-highlight mb-3">
+                <div class="me-auto p-2 bd-highlight">
+                    <h2>
+                        {{order.get_status_display}}
+                    </h2>
+                </div>
+                <div class="ms-auto p-2 bd-highlight">
+                    <h2>
+                        {{order.data_field}}
+                    </h2>
+                </div>
+              </div>
+            <div class="col">
+                {%for item in items_in_order%}
+                <div class="card gy-5 mb-4 mt-4">
+                    <div class="card-body p-4">
+
+                        <div class="row align-items-center">
+                            <div class="col-3 align-items-center">
+                                <div class="col-md-2">
+                                    <img src="/static/img/{{item.photo}}" class="img-fluid" style="max-width: 250%;"
+                                        alt="Generic placeholder image">
+                                </div>
+                            </div>
+                            <div class="col-9 align-items-center justify-content-center d-flex">
+                                <div class="col-md-2 d-flex justify-content-center mx-auto">
+                                    <div>
+                                        <p class="small text-muted mb-4 pb-2">Название</p>
+                                        <p class="lead fw-normal mb-0">{{item.name}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 d-flex justify-content-center mx-auto">
+                                    <div>
+                                        <p class="small text-muted mb-4 pb-2">Количество</p>
+                                        <p class="lead fw-normal mb-0">1</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 d-flex justify-content-center mx-auto">
+                                    <div>
+                                        <p class="small text-muted mb-4 pb-2">Цена</p>
+                                        <p class="lead fw-normal mb-0">{{item.price}}р</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {%endfor%}
+
+                <!-- подсчет стоимости -->
+                <div class="card mb-5">
+                    <div class="card-body p-4">
+
+                        <div class="float-end">
+                            <p class="mb-0 me-5 d-flex align-items-center">
+                                <span class="small text-muted me-2">Общая стоимость:</span> <span
+                                    class="lead fw-normal">{{order.order_price}}р</span>
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{%endfor%}
+{%else%}
+<h1 class="justify-content-center">Вы ещё не совершали заказов</h1>
+{%endifnotequal%}
+{% endblock %}

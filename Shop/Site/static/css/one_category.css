@@ -1,0 +1,44 @@
+.items
+{
+    margin-right: 0% !important;
+    margin-left: 0% !;
+}
+
+.stars
+{
+    margin-top: 5px;
+    margin-right: 5px;
+}
+
+.stars:hover{
+    color:gold;
+}
+
+
+.card-title
+{
+    color:black;
+}
+.card-text
+{
+    color:black;
+}
+
+
+
+form.hide-submit input[type="submit"] { display: none;}
+
+.stars:hover{
+    cursor: pointer;
+}
+
+a.my_button
+{
+    text-decoration: none !important;
+    color:white !important;
+}
+a.my_star
+{
+    text-decoration: none !important;
+    color:black !important;
+}

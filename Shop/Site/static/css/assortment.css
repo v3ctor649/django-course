@@ -1,0 +1,17 @@
+.card_new
+{
+    border:0px !important;
+    text-decoration: none;
+}
+
+.card-body
+{
+    background: rgb(255,144,144);
+    background: linear-gradient(0deg, rgba(255,144,144,1) 55%, rgba(255,255,255,1) 100%);
+    border-top:1px rgba(255,144,144,1);
+}
+
+.card_name
+{
+    color: white;
+}

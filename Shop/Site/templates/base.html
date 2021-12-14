@@ -1,0 +1,94 @@
+{% load cache %}
+{% block for_css %}
+{% endblock %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="{% static '/img/favicon.ico'%}">
+  <title>{% block title %}{% endblock %}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="{% static 'css/base.css'%}">
+</head>
+
+<body>
+  <nav class="navbar navbar-light bg-light menu">
+    <div class="container-fluid">
+      <img class="img-fluid rounded-circle" src="{% static '/img/icon.jpg'%}" alt="" style="width: 10%;">
+      <div class="d-flex">
+        <a class="nav-link button" href="{%url 'main_page'%}">Главная</a>
+        <a class="nav-link button" href="{% url 'assortment'%}">Ассортимент</a>
+      </div>
+      <div class="d-flex">
+        <a class="nav-link" href="{% url 'cart'%}">
+          <div class="position-relative">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+              class="bi bi-cart3 position-relative" viewBox="0 0 16 16">
+              <path
+                d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+            </svg>
+            {%if request.user.is_authenticated%}
+                <span id = 'items_in_cart'
+                class="position-absolute top-0 start-100 translate-middle badge bg-secondary rounded-circle bg-danger p-1">{{counter_items_in_cart}}</span>
+            {%endif%}
+          </div>
+        </a>
+        {%if request.user.is_authenticated%}
+        <div class="nav-link">
+          <div class="dropdown show">
+            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+                class="bi bi-person-circle" viewBox="0 0 16 16">
+                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                <path fill-rule="evenodd"
+                  d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+              </svg>
+            </a>
+
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <a class="dropdown-item" href="{% url 'orders'%}">Мои заказы</a>
+              <a class="dropdown-item" href="{% url 'favourite'%}">Избранные товары</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="{% url 'logout'%}">Выход</a>
+            </div>
+          </div>
+        </div>
+        {%else%}
+        <a class="nav-link" href="{%url 'login'%}" style="width: 81.7167px;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-person-circle"
+            viewBox="0 0 16 16">
+            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+            <path fill-rule="evenodd"
+              d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+          </svg>
+        </a>
+        {%endif%}
+      </div>
+    </div>
+  </nav>
+
+  {% block content %}
+
+  {% endblock %}
+
+
+  {%block javascript%}
+  
+  {%endblock%}
+</body>
+
+</html>
